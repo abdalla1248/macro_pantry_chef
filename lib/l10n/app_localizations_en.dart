@@ -57,7 +57,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get macroTargets => 'Macro Targets';
 
   @override
-  String get protein => 'P';
+  String get protein => 'Protein';
 
   @override
   String get carbohydrates => 'Carbohydrates';
@@ -139,10 +139,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get glutenFree => 'Gluten Free';
 
   @override
-  String get carbs => 'C';
+  String get proteinShort => 'Pro';
 
   @override
-  String get fat => 'F';
+  String get carbsShort => 'Carb';
+
+  @override
+  String get fatShort => 'Fat';
 
   @override
   String get minutes => 'm';
@@ -182,4 +185,43 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get language => 'Language';
+
+  @override
+  String get noIngredientsFound => 'No ingredients found.';
+
+  @override
+  String get recipeNotFound => 'Recipe not found';
+
+  @override
+  String get matches => 'matches';
+
+  @override
+  String get availableRecipes => 'Available Recipes';
+
+  @override
+  String get caloriesLabel => 'Calories';
+
+  @override
+  String get proteinLabel => 'Protein';
+
+  @override
+  String get carbsLabel => 'Carbs';
+
+  @override
+  String get fatLabel => 'Fat';
+
+  @override
+  String get mins => 'mins';
+
+  @override
+  String get servings => 'Servings';
+
+  @override
+  String get runningLow => 'Running low';
+
+  @override
+  String get missing => 'missing';
+
+  @override
+  String get minShort => 'min';
 }

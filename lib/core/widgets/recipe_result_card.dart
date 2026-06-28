@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../extensions/color_extensions.dart';
+import '../extensions/theme_extensions.dart';
 import '../theme/app_spacing.dart';
 import 'glass_card.dart';
 
@@ -96,7 +97,7 @@ class RecipeResultCard extends StatelessWidget {
                         ),
                         SizedBox(width: AppSpacing.xs),
                         Text(
-                          '$missingCount missing',
+                          '$missingCount ${context.l10n.missing}',
                           style: textTheme.labelSmall?.copyWith(
                             color: scheme.onSurface,
                           ),
@@ -153,19 +154,19 @@ class RecipeResultCard extends StatelessWidget {
                     spacing: AppSpacing.xs,
                     children: [
                       _MacroChip(
-                        label: '${protein}g Pro',
+                        label: '${protein}g ${context.l10n.proteinShort}',
                         dotColor: scheme.primary,
                         scheme: scheme,
                         textTheme: textTheme,
                       ),
                       _MacroChip(
-                        label: '${carbs}g Carb',
+                        label: '${carbs}g ${context.l10n.carbsShort}',
                         dotColor: scheme.secondaryContainer,
                         scheme: scheme,
                         textTheme: textTheme,
                       ),
                       _MacroChip(
-                        label: '${fat}g Fat',
+                        label: '${fat}g ${context.l10n.fatShort}',
                         dotColor: const Color(0xFFFBBC04),
                         scheme: scheme,
                         textTheme: textTheme,
@@ -192,7 +193,7 @@ class RecipeResultCard extends StatelessWidget {
                                 color: scheme.onSurfaceVariant),
                             SizedBox(width: AppSpacing.xs),
                             Text(
-                              '$cookTimeMinutes min',
+                              '$cookTimeMinutes ${context.l10n.minShort}',
                               style: textTheme.labelSmall?.copyWith(
                                 color: scheme.onSurfaceVariant,
                               ),

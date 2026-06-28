@@ -59,24 +59,31 @@ class _RecipeResultsView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            l10n.foundOptions(state.recipes.length),
-                            style: textTheme.labelMedium?.copyWith(
-                              color: scheme.onSurfaceVariant,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              l10n.foundOptions(state.recipes.length),
+                              style: textTheme.labelMedium?.copyWith(
+                                color: scheme.onSurfaceVariant,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                          SizedBox(height: AppSpacing.xs.h),
-                          Text(
-                            l10n.matchingRecipes,
-                            style: textTheme.displayMedium?.copyWith(
-                              color: scheme.onSurface,
-                              fontWeight: FontWeight.bold,
+                            SizedBox(height: AppSpacing.xs.h),
+                            Text(
+                              l10n.matchingRecipes,
+                              style: textTheme.displayLarge?.copyWith(
+                                color: scheme.onSurface,
+                                fontWeight: FontWeight.bold,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       OutlinedButton.icon(
                         onPressed: () => context.pushNamed('macroFilter'),
@@ -124,7 +131,7 @@ class _RecipeResultsView extends StatelessWidget {
                         cookTimeMinutes: recipe.cookTimeMinutes,
                         difficulty: recipe.difficulty,
                         missingCount: recipe.missingCount,
-                        onTap: () => context.goNamed(
+                        onTap: () => context.pushNamed(
                           'recipeDetails',
                           pathParameters: {'id': recipe.id},
                         ),

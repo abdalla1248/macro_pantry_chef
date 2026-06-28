@@ -107,7 +107,7 @@ class _PantryView extends StatelessWidget {
                   return SliverFillRemaining(
                     child: Center(
                       child: Text(
-                        'No ingredients found.',
+                        l10n.noIngredientsFound,
                         style: textTheme.bodyLarge?.copyWith(
                           color: scheme.onSurfaceVariant,
                         ),
@@ -178,7 +178,7 @@ class _PantryView extends StatelessWidget {
       ),
       child: SafeArea(
         child: FilledButton(
-          onPressed: () => context.goNamed('macroFilter'),
+          onPressed: () => context.pushNamed('macroFilter'),
           style: FilledButton.styleFrom(
             backgroundColor: scheme.primary,
             foregroundColor: scheme.onPrimary,

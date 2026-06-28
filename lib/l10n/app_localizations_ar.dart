@@ -30,66 +30,66 @@ class AppLocalizationsAr extends AppLocalizations {
   String get navProfile => 'الملف الشخصي';
 
   @override
-  String get recentRecipes => 'Recent Recipes';
+  String get recentRecipes => 'الوصفات الأخيرة';
 
   @override
-  String get yourPantry => 'Your Pantry';
+  String get yourPantry => 'مخزني';
 
   @override
-  String get pantryDescription => 'Add ingredients to find recipes.';
+  String get pantryDescription => 'أضف المكونات للعثور على وصفات.';
 
   @override
-  String get searchIngredientsPlaceholder => 'Search ingredients...';
+  String get searchIngredientsPlaceholder => 'ابحث عن مكونات...';
 
   @override
-  String get addManually => 'Add Manually';
+  String get addManually => 'إضافة يدوياً';
 
   @override
-  String get currentInventory => 'CURRENT INVENTORY';
+  String get currentInventory => 'المخزون الحالي';
 
   @override
-  String get savePantryInventory => 'Save Pantry & Find Recipes';
+  String get savePantryInventory => 'حفظ المخزن والبحث عن وصفات';
 
   @override
-  String get macroFilter => 'Macro Filter';
+  String get macroFilter => 'تصفية الماكرو';
 
   @override
-  String get macroTargets => 'Macro Targets';
+  String get macroTargets => 'أهداف الماكرو';
 
   @override
-  String get protein => 'ب';
+  String get protein => 'بروتين';
 
   @override
-  String get carbohydrates => 'Carbohydrates';
+  String get carbohydrates => 'كربوهيدرات';
 
   @override
-  String get fats => 'Fats';
+  String get fats => 'دهون';
 
   @override
-  String get calories => 'Calories';
+  String get calories => 'سعرات حرارية';
 
   @override
-  String get viewMenu => 'View Menu';
+  String get viewMenu => 'عرض القائمة';
 
   @override
-  String get matchingRecipes => 'Matching Recipes';
+  String get matchingRecipes => 'وصفات مطابقة';
 
   @override
   String foundOptions(int count) {
-    return 'Found $count options from your pantry';
+    return 'تم العثور على $count خيار من مخزنك';
   }
 
   @override
-  String get ingredients => 'Ingredients';
+  String get ingredients => 'المكونات';
 
   @override
-  String get cookingInstructions => 'Cooking Instructions';
+  String get cookingInstructions => 'تعليمات الطبخ';
 
   @override
-  String get cookNow => 'Cook Now';
+  String get cookNow => 'اطبخ الآن';
 
   @override
-  String get saveToPlanner => 'Save to Planner';
+  String get saveToPlanner => 'حفظ في المخطط';
 
   @override
   String get searchHint => 'ابحث عن وصفات، مكونات، أو عناصر غذائية...';
@@ -139,10 +139,13 @@ class AppLocalizationsAr extends AppLocalizations {
   String get glutenFree => 'خالٍ من الغلوتين';
 
   @override
-  String get carbs => 'ك';
+  String get proteinShort => 'بروتين';
 
   @override
-  String get fat => 'د';
+  String get carbsShort => 'كارب';
+
+  @override
+  String get fatShort => 'دهون';
 
   @override
   String get minutes => 'د';
@@ -182,4 +185,43 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get language => 'اللغة';
+
+  @override
+  String get noIngredientsFound => 'لم يتم العثور على مكونات.';
+
+  @override
+  String get recipeNotFound => 'الوصفة غير موجودة';
+
+  @override
+  String get matches => 'مطابقات';
+
+  @override
+  String get availableRecipes => 'الوصفات المتاحة';
+
+  @override
+  String get caloriesLabel => 'السعرات';
+
+  @override
+  String get proteinLabel => 'البروتين';
+
+  @override
+  String get carbsLabel => 'الكربوهيدرات';
+
+  @override
+  String get fatLabel => 'الدهون';
+
+  @override
+  String get mins => 'دقائق';
+
+  @override
+  String get servings => 'حصص';
+
+  @override
+  String get runningLow => 'أوشك على النفاد';
+
+  @override
+  String get missing => 'مفقود';
+
+  @override
+  String get minShort => 'دقيقة';
 }

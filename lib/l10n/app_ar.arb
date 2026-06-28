@@ -10,6 +10,34 @@
   "navFavorites": "المفضلة",
   "navProfile": "الملف الشخصي",
 
+  "recentRecipes": "الوصفات الأخيرة",
+  "yourPantry": "مخزني",
+  "pantryDescription": "أضف المكونات للعثور على وصفات.",
+  "searchIngredientsPlaceholder": "ابحث عن مكونات...",
+  "addManually": "إضافة يدوياً",
+  "currentInventory": "المخزون الحالي",
+  "savePantryInventory": "حفظ المخزن والبحث عن وصفات",
+  "macroFilter": "تصفية الماكرو",
+  "macroTargets": "أهداف الماكرو",
+  "protein": "بروتين",
+  "carbohydrates": "كربوهيدرات",
+  "fats": "دهون",
+  "calories": "سعرات حرارية",
+  "viewMenu": "عرض القائمة",
+  "matchingRecipes": "وصفات مطابقة",
+  "foundOptions": "تم العثور على {count} خيار من مخزنك",
+  "@foundOptions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredients": "المكونات",
+  "cookingInstructions": "تعليمات الطبخ",
+  "cookNow": "اطبخ الآن",
+  "saveToPlanner": "حفظ في المخطط",
+
   "searchHint": "ابحث عن وصفات، مكونات، أو عناصر غذائية...",
   "notifications": "الإشعارات",
 
@@ -36,9 +64,9 @@
   "keto": "كيتو",
   "glutenFree": "خالٍ من الغلوتين",
 
-  "protein": "ب",
-  "carbs": "ك",
-  "fat": "د",
+  "proteinShort": "بروتين",
+  "carbsShort": "كارب",
+  "fatShort": "دهون",
   "minutes": "د",
 
   "grilledSalmonBowl": "وعاء السلمون المشوي بالأعشاب والليمون",
@@ -54,5 +82,19 @@
   "comingSoon": "قريباً",
   "darkMode": "الوضع الداكن",
   "lightMode": "الوضع الفاتح",
-  "language": "اللغة"
+  "language": "اللغة",
+
+  "noIngredientsFound": "لم يتم العثور على مكونات.",
+  "recipeNotFound": "الوصفة غير موجودة",
+  "matches": "مطابقات",
+  "availableRecipes": "الوصفات المتاحة",
+  "caloriesLabel": "السعرات",
+  "proteinLabel": "البروتين",
+  "carbsLabel": "الكربوهيدرات",
+  "fatLabel": "الدهون",
+  "mins": "دقائق",
+  "servings": "حصص",
+  "runningLow": "أوشك على النفاد",
+  "missing": "مفقود",
+  "minShort": "دقيقة"
 }

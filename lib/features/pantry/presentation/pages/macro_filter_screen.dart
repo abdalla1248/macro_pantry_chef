@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:macro_pantry_chef/core/theme/app_spacing.dart';
 import 'package:macro_pantry_chef/core/extensions/theme_extensions.dart';
 import 'package:macro_pantry_chef/core/widgets/donut_chart.dart';
+import 'package:macro_pantry_chef/core/widgets/glass_card.dart';
 import 'package:macro_pantry_chef/core/widgets/macro_slider_card.dart';
 import '../cubit/recipe_results_cubit.dart';
 import '../cubit/recipe_results_state.dart';
@@ -198,20 +199,9 @@ class _MatchPreviewCard extends StatelessWidget {
     final textTheme = context.textTheme;
     final l10n = context.l10n;
 
-    return Container(
+    return GlassCard(
       padding: EdgeInsets.all(AppSpacing.md.r),
-      decoration: BoxDecoration(
-        color: Colors.white.withValues(alpha: 0.7),
-        borderRadius: BorderRadius.circular(16.r),
-        border: Border.all(color: Colors.white.withValues(alpha: 0.2)),
-        boxShadow: [
-          BoxShadow(
-            color: scheme.primary.withValues(alpha: 0.05),
-            blurRadius: 30,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
+      borderRadius: BorderRadius.circular(16.r),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -249,7 +239,7 @@ class _MatchPreviewCard extends StatelessWidget {
             ],
           ),
           FilledButton.icon(
-            onPressed: () => context.goNamed('recipeResults'),
+            onPressed: () => context.pushNamed('recipeResults'),
             style: FilledButton.styleFrom(
               padding: EdgeInsets.symmetric(
                 horizontal: 24.w,

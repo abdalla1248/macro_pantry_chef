@@ -184,9 +184,9 @@ class _HomeView extends StatelessWidget {
                         fatGrams: recipe.fatGrams,
                         cookTime:
                             '${recipe.cookTimeMinutes}${context.l10n.minutes}',
-                        proteinLabel: context.l10n.protein,
-                        carbsLabel: context.l10n.carbs,
-                        fatLabel: context.l10n.fat,
+                        proteinLabel: context.l10n.proteinShort,
+                        carbsLabel: context.l10n.carbsShort,
+                        fatLabel: context.l10n.fatShort,
                       );
                     },
                   ),

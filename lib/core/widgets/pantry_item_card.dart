@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../extensions/color_extensions.dart';
 import '../theme/app_radius.dart';
 import '../theme/app_spacing.dart';
+import '../extensions/theme_extensions.dart';
 import 'glass_card.dart';
 import 'quantity_stepper.dart';
 
@@ -84,7 +85,7 @@ class PantryItemCard extends StatelessWidget {
                   Padding(
                     padding: EdgeInsets.only(top: 4.h),
                     child: Text(
-                      'Running low',
+                      context.l10n.runningLow,
                       style: textTheme.labelSmall?.copyWith(
                         color: scheme.error,
                       ),
@@ -113,21 +114,21 @@ class PantryItemCard extends StatelessWidget {
 
     if (protein > 0) {
       chips.add(_MiniMacroChip(
-        label: '${protein.toStringAsFixed(0)}g P',
+        label: '${protein.toStringAsFixed(0)}g ${context.l10n.proteinShort}',
         dotColor: scheme.primary,
         textColor: scheme.primary,
       ));
     }
     if (carbs > 0) {
       chips.add(_MiniMacroChip(
-        label: '${carbs.toStringAsFixed(0)}g C',
+        label: '${carbs.toStringAsFixed(0)}g ${context.l10n.carbsShort}',
         dotColor: scheme.secondaryContainer,
         textColor: scheme.onSurfaceVariant,
       ));
     }
     if (fat > 0) {
       chips.add(_MiniMacroChip(
-        label: '${fat.toStringAsFixed(1)}g F',
+        label: '${fat.toStringAsFixed(1)}g ${context.l10n.fatShort}',
         dotColor: scheme.secondary,
         textColor: scheme.onSurfaceVariant,
       ));

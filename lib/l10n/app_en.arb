@@ -64,9 +64,9 @@
   "keto": "Keto",
   "glutenFree": "Gluten Free",
 
-  "protein": "P",
-  "carbs": "C",
-  "fat": "F",
+  "proteinShort": "Pro",
+  "carbsShort": "Carb",
+  "fatShort": "Fat",
   "minutes": "m",
 
   "grilledSalmonBowl": "Grilled Lemon Herb Salmon Bowl",
@@ -82,5 +82,19 @@
   "comingSoon": "Coming Soon",
   "darkMode": "Dark Mode",
   "lightMode": "Light Mode",
-  "language": "Language"
+  "language": "Language",
+
+  "noIngredientsFound": "No ingredients found.",
+  "recipeNotFound": "Recipe not found",
+  "matches": "matches",
+  "availableRecipes": "Available Recipes",
+  "caloriesLabel": "Calories",
+  "proteinLabel": "Protein",
+  "carbsLabel": "Carbs",
+  "fatLabel": "Fat",
+  "mins": "mins",
+  "servings": "Servings",
+  "runningLow": "Running low",
+  "missing": "missing",
+  "minShort": "min"
 }

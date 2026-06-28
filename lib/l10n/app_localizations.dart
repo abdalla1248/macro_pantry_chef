@@ -197,7 +197,7 @@ abstract class AppLocalizations {
   /// No description provided for @protein.
   ///
   /// In en, this message translates to:
-  /// **'P'**
+  /// **'Protein'**
   String get protein;
 
   /// No description provided for @carbohydrates.
@@ -350,17 +350,23 @@ abstract class AppLocalizations {
   /// **'Gluten Free'**
   String get glutenFree;
 
-  /// No description provided for @carbs.
+  /// No description provided for @proteinShort.
   ///
   /// In en, this message translates to:
-  /// **'C'**
-  String get carbs;
+  /// **'Pro'**
+  String get proteinShort;
 
-  /// No description provided for @fat.
+  /// No description provided for @carbsShort.
   ///
   /// In en, this message translates to:
-  /// **'F'**
-  String get fat;
+  /// **'Carb'**
+  String get carbsShort;
+
+  /// No description provided for @fatShort.
+  ///
+  /// In en, this message translates to:
+  /// **'Fat'**
+  String get fatShort;
 
   /// No description provided for @minutes.
   ///
@@ -439,6 +445,84 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Language'**
   String get language;
+
+  /// No description provided for @noIngredientsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No ingredients found.'**
+  String get noIngredientsFound;
+
+  /// No description provided for @recipeNotFound.
+  ///
+  /// In en, this message translates to:
+  /// **'Recipe not found'**
+  String get recipeNotFound;
+
+  /// No description provided for @matches.
+  ///
+  /// In en, this message translates to:
+  /// **'matches'**
+  String get matches;
+
+  /// No description provided for @availableRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'Available Recipes'**
+  String get availableRecipes;
+
+  /// No description provided for @caloriesLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Calories'**
+  String get caloriesLabel;
+
+  /// No description provided for @proteinLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Protein'**
+  String get proteinLabel;
+
+  /// No description provided for @carbsLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Carbs'**
+  String get carbsLabel;
+
+  /// No description provided for @fatLabel.
+  ///
+  /// In en, this message translates to:
+  /// **'Fat'**
+  String get fatLabel;
+
+  /// No description provided for @mins.
+  ///
+  /// In en, this message translates to:
+  /// **'mins'**
+  String get mins;
+
+  /// No description provided for @servings.
+  ///
+  /// In en, this message translates to:
+  /// **'Servings'**
+  String get servings;
+
+  /// No description provided for @runningLow.
+  ///
+  /// In en, this message translates to:
+  /// **'Running low'**
+  String get runningLow;
+
+  /// No description provided for @missing.
+  ///
+  /// In en, this message translates to:
+  /// **'missing'**
+  String get missing;
+
+  /// No description provided for @minShort.
+  ///
+  /// In en, this message translates to:
+  /// **'min'**
+  String get minShort;
 }
 
 class _AppLocalizationsDelegate

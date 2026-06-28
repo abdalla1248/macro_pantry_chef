@@ -41,7 +41,7 @@ class _RecipeDetailView extends StatelessWidget {
     if (recipe == null) {
       return Scaffold(
         appBar: AppBar(),
-        body: const Center(child: Text('Recipe not found')),
+        body: Center(child: Text(l10n.recipeNotFound)),
       );
     }
 
@@ -160,7 +160,7 @@ class _RecipeDetailView extends StatelessWidget {
                             children: [
                               Expanded(
                                 child: _MacroStat(
-                                  label: 'Calories',
+                                  label: l10n.caloriesLabel,
                                   value: '${recipe.calories}',
                                   color: scheme.onSurfaceVariant,
                                   bgColor: scheme.surface.withValues(alpha: 0.5),
@@ -170,7 +170,7 @@ class _RecipeDetailView extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: _MacroStat(
-                                  label: 'Protein',
+                                  label: l10n.proteinLabel,
                                   value: '${recipe.protein}g',
                                   color: scheme.primary,
                                   bgColor: scheme.primaryContainer.withValues(alpha: 0.2),
@@ -180,7 +180,7 @@ class _RecipeDetailView extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: _MacroStat(
-                                  label: 'Carbs',
+                                  label: l10n.carbsLabel,
                                   value: '${recipe.carbs}g',
                                   color: scheme.primary,
                                   bgColor: scheme.surface.withValues(alpha: 0.5),
@@ -190,7 +190,7 @@ class _RecipeDetailView extends StatelessWidget {
                               SizedBox(width: 8.w),
                               Expanded(
                                 child: _MacroStat(
-                                  label: 'Fat',
+                                  label: l10n.fatLabel,
                                   value: '${recipe.fat}g',
                                   color: scheme.primary,
                                   bgColor: scheme.surface.withValues(alpha: 0.5),
@@ -207,7 +207,7 @@ class _RecipeDetailView extends StatelessWidget {
                               Icon(Icons.timer, size: 18.sp, color: scheme.onSurfaceVariant),
                               SizedBox(width: 4.w),
                               Text(
-                                '${recipe.cookTimeMinutes} mins',
+                                '${recipe.cookTimeMinutes} ${l10n.mins}',
                                 style: textTheme.labelMedium?.copyWith(
                                   color: scheme.onSurfaceVariant,
                                 ),
@@ -216,7 +216,7 @@ class _RecipeDetailView extends StatelessWidget {
                               Icon(Icons.restaurant, size: 18.sp, color: scheme.onSurfaceVariant),
                               SizedBox(width: 4.w),
                               Text(
-                                '${recipe.servings} Servings',
+                                '${recipe.servings} ${l10n.servings}',
                                 style: textTheme.labelMedium?.copyWith(
                                   color: scheme.onSurfaceVariant,
                                 ),
