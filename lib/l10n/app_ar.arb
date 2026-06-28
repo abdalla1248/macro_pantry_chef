@@ -1,0 +1,58 @@
+{
+  "@@locale": "ar",
+
+  "appName": "ماكرو بانتري شيف",
+  "tagline": "اطبخ بذكاء. كل أفضل.",
+
+  "navHome": "الرئيسية",
+  "navPantry": "المخزن",
+  "navPlanner": "المخطط",
+  "navFavorites": "المفضلة",
+  "navProfile": "الملف الشخصي",
+
+  "searchHint": "ابحث عن وصفات، مكونات، أو عناصر غذائية...",
+  "notifications": "الإشعارات",
+
+  "ingredientsIHave": "المكونات المتوفرة",
+  "managePantry": "إدارة المخزن",
+  "ingredientCount": "لديك {count} عنصر مسجل. لنرَ ماذا يمكننا تحضيره.",
+  "@ingredientCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addItem": "إضافة عنصر",
+  "generateMealIdeas": "إنشاء أفكار وجبات",
+
+  "todaysRecommendations": "توصيات اليوم",
+  "quickFilters": "تصفية سريعة",
+
+  "highProtein": "عالي البروتين",
+  "lowCarb": "منخفض الكربوهيدرات",
+  "vegetarian": "نباتي",
+  "vegan": "نباتي صرف",
+  "keto": "كيتو",
+  "glutenFree": "خالٍ من الغلوتين",
+
+  "protein": "ب",
+  "carbs": "ك",
+  "fat": "د",
+  "minutes": "د",
+
+  "grilledSalmonBowl": "وعاء السلمون المشوي بالأعشاب والليمون",
+  "grilledSalmonDesc": "غني بالأوميغا-3 والبروتين الخالي من الدهون.",
+  "chickpeaSalad": "سلطة الحمص المتوسطية",
+  "chickpeaSaladDesc": "خيار غداء سريع وغني بالألياف.",
+
+  "chickenBreast": "صدر دجاج",
+  "sweetPotato": "بطاطا حلوة",
+  "broccoli": "بروكلي",
+  "quinoa": "كينوا",
+
+  "comingSoon": "قريباً",
+  "darkMode": "الوضع الداكن",
+  "lightMode": "الوضع الفاتح",
+  "language": "اللغة"
+}

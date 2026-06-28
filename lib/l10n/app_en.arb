@@ -1,0 +1,86 @@
+{
+  "@@locale": "en",
+
+  "appName": "Macro Pantry Chef",
+  "tagline": "Cook Smart. Eat Better.",
+
+  "navHome": "Home",
+  "navPantry": "Pantry",
+  "navPlanner": "Planner",
+  "navFavorites": "Favorites",
+  "navProfile": "Profile",
+
+  "recentRecipes": "Recent Recipes",
+  "yourPantry": "Your Pantry",
+  "pantryDescription": "Add ingredients to find recipes.",
+  "searchIngredientsPlaceholder": "Search ingredients...",
+  "addManually": "Add Manually",
+  "currentInventory": "CURRENT INVENTORY",
+  "savePantryInventory": "Save Pantry & Find Recipes",
+  "macroFilter": "Macro Filter",
+  "macroTargets": "Macro Targets",
+  "protein": "Protein",
+  "carbohydrates": "Carbohydrates",
+  "fats": "Fats",
+  "calories": "Calories",
+  "viewMenu": "View Menu",
+  "matchingRecipes": "Matching Recipes",
+  "foundOptions": "Found {count} options from your pantry",
+  "@foundOptions": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "ingredients": "Ingredients",
+  "cookingInstructions": "Cooking Instructions",
+  "cookNow": "Cook Now",
+  "saveToPlanner": "Save to Planner",
+
+  "searchHint": "Search recipes, ingredients, or macros...",
+  "notifications": "Notifications",
+
+  "ingredientsIHave": "Ingredients I Have",
+  "managePantry": "Manage Pantry",
+  "ingredientCount": "You have {count} items logged. Let's see what we can make.",
+  "@ingredientCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "addItem": "Add Item",
+  "generateMealIdeas": "Generate Meal Ideas",
+
+  "todaysRecommendations": "Today's Recommendations",
+  "quickFilters": "Quick Filters",
+
+  "highProtein": "High Protein",
+  "lowCarb": "Low Carb",
+  "vegetarian": "Vegetarian",
+  "vegan": "Vegan",
+  "keto": "Keto",
+  "glutenFree": "Gluten Free",
+
+  "protein": "P",
+  "carbs": "C",
+  "fat": "F",
+  "minutes": "m",
+
+  "grilledSalmonBowl": "Grilled Lemon Herb Salmon Bowl",
+  "grilledSalmonDesc": "Rich in Omega-3s and lean protein.",
+  "chickpeaSalad": "Mediterranean Chickpea Salad",
+  "chickpeaSaladDesc": "Quick, fiber-rich lunch option.",
+
+  "chickenBreast": "Chicken Breast",
+  "sweetPotato": "Sweet Potato",
+  "broccoli": "Broccoli",
+  "quinoa": "Quinoa",
+
+  "comingSoon": "Coming Soon",
+  "darkMode": "Dark Mode",
+  "lightMode": "Light Mode",
+  "language": "Language"
+}
