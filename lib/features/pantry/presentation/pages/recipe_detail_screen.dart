@@ -3,11 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:share_plus/share_plus.dart';
+
 import 'package:macro_pantry_chef/core/theme/app_radius.dart';
 import 'package:macro_pantry_chef/core/theme/app_spacing.dart';
 import 'package:macro_pantry_chef/core/extensions/theme_extensions.dart';
 import 'package:macro_pantry_chef/core/widgets/glass_card.dart';
-import '../cubit/recipe_results_cubit.dart';
+import 'package:macro_pantry_chef/core/widgets/translated_text.dart';
+import '../../../nutrition/presentation/cubit/macro_target_cubit.dart';
+import '../../../favorites/presentation/cubit/favorites_cubit.dart';
+import '../../../planner/presentation/cubit/planner_cubit.dart';
+import '../../../pantry/data/models/recipe.dart';
 
 class RecipeDetailScreen extends StatelessWidget {
   const RecipeDetailScreen({super.key, required this.recipeId});
@@ -32,7 +38,7 @@ class _RecipeDetailView extends StatelessWidget {
     final l10n = context.l10n;
     
     // Find recipe (in a real app this might be an async load)
-    final recipe = context.read<RecipeResultsCubit>().getRecipeById(recipeId);
+    final recipe = context.read<MacroTargetCubit>().getRecipeById(recipeId);
     
     if (recipe == null) {
       return Scaffold(
@@ -40,6 +46,12 @@ class _RecipeDetailView extends StatelessWidget {
         body: Center(child: Text(l10n.recipeNotFound)),
       );
     }
+
+    final isFavorite = context.watch<FavoritesCubit>().isFavorite(recipe.id);
+    
+    final routerState = GoRouterState.of(context);
+    final planDateStr = routerState.uri.queryParameters['planDate'];
+    final mealType = routerState.uri.queryParameters['mealType'];
 
     return Scaffold(
       backgroundColor: scheme.surface,
@@ -61,14 +73,20 @@ class _RecipeDetailView extends StatelessWidget {
             actions: [
               _GlassIconButton(
                 icon: Icons.share,
-                onPressed: () {},
+                onPressed: () {
+                  final text = '${recipe.title}\n\n'
+                      'Calories: ${recipe.calories.round()} kcal\n'
+                      'Protein: ${recipe.protein.round()}g | Carbs: ${recipe.carbs.round()}g | Fat: ${recipe.fat.round()}g\n\n'
+                      'Shared from Macro Pantry Chef';
+                  Share.share(text);
+                },
                 color: scheme.onSurfaceVariant,
               ),
               SizedBox(width: 8.w),
               _GlassIconButton(
-                icon: Icons.favorite_border,
-                onPressed: () {},
-                color: scheme.onSurfaceVariant,
+                icon: isFavorite ? Icons.favorite : Icons.favorite_border,
+                onPressed: () => context.read<FavoritesCubit>().toggleFavorite(recipe),
+                color: isFavorite ? Colors.red : scheme.onSurfaceVariant,
               ),
               SizedBox(width: 16.w),
             ],
@@ -119,7 +137,7 @@ class _RecipeDetailView extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Expanded(
-                                child: Text(
+                                child: TranslatedText(
                                   recipe.title,
                                   style: textTheme.displayMedium?.copyWith(
                                     color: scheme.primary,
@@ -143,7 +161,7 @@ class _RecipeDetailView extends StatelessWidget {
                             ],
                           ),
                           SizedBox(height: AppSpacing.sm.h),
-                          Text(
+                          TranslatedText(
                             recipe.description,
                             style: textTheme.bodyMedium?.copyWith(
                               color: scheme.onSurfaceVariant,
@@ -248,13 +266,13 @@ class _RecipeDetailView extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
+                                TranslatedText(
                                   ing.name,
                                   style: textTheme.bodyMedium?.copyWith(
                                     color: scheme.onSurface,
                                   ),
                                 ),
-                                Text(
+                                TranslatedText(
                                   ing.amount,
                                   style: textTheme.labelMedium?.copyWith(
                                     color: scheme.onSurfaceVariant,
@@ -303,14 +321,14 @@ class _RecipeDetailView extends StatelessWidget {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
+                                    TranslatedText(
                                       step.title,
                                       style: textTheme.headlineSmall?.copyWith(
                                         color: scheme.onSurface,
                                       ),
                                     ),
                                     SizedBox(height: 4.h),
-                                    Text(
+                                    TranslatedText(
                                       step.description,
                                       style: textTheme.bodyMedium?.copyWith(
                                         color: scheme.onSurfaceVariant,
@@ -327,7 +345,9 @@ class _RecipeDetailView extends StatelessWidget {
                     
                     // Buttons
                     FilledButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.pushNamed('cookingMode', pathParameters: {'id': recipe.id});
+                      },
                       icon: const Icon(Icons.local_dining),
                       label: Text(l10n.cookNow),
                       style: FilledButton.styleFrom(
@@ -341,7 +361,7 @@ class _RecipeDetailView extends StatelessWidget {
                     ),
                     SizedBox(height: AppSpacing.sm.h),
                     OutlinedButton.icon(
-                      onPressed: () {},
+                      onPressed: () => _showMealSlotSelector(context, recipe),
                       icon: const Icon(Icons.bookmark_add),
                       label: Text(l10n.saveToPlanner),
                       style: OutlinedButton.styleFrom(
@@ -363,6 +383,79 @@ class _RecipeDetailView extends StatelessWidget {
           ),
         ],
       ),
+      bottomNavigationBar: (planDateStr != null && mealType != null)
+          ? SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: AppSpacing.containerMargin.w,
+                  vertical: AppSpacing.sm.h,
+                ),
+                child: FilledButton(
+                  onPressed: () {
+                    final date = DateTime.parse(planDateStr);
+                    context.read<PlannerCubit>().addRecipeToPlan(date, mealType, recipe);
+                    context.goNamed('planner');
+                  },
+                  style: FilledButton.styleFrom(
+                    padding: EdgeInsets.symmetric(vertical: 16.h),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.r),
+                    ),
+                  ),
+                  child: Text('Add to Meal Plan (${mealType.toUpperCase()})'),
+                ),
+              ),
+            )
+          : null,
+    );
+  }
+
+  void _showMealSlotSelector(BuildContext context, Recipe recipe) {
+    showModalBottomSheet(
+      context: context,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24.r)),
+      ),
+      builder: (bottomSheetContext) {
+        final scheme = bottomSheetContext.color;
+        final textTheme = bottomSheetContext.textTheme;
+        return SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(vertical: AppSpacing.md.h),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Add to Planner',
+                  style: textTheme.titleLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                SizedBox(height: AppSpacing.sm.h),
+                for (final slot in ['Breakfast', 'Lunch', 'Dinner', 'Snack'])
+                  ListTile(
+                    leading: Icon(Icons.restaurant, color: scheme.primary),
+                    title: Text(slot),
+                    onTap: () {
+                      final now = DateTime.now();
+                      context
+                          .read<PlannerCubit>()
+                          .addRecipeToPlan(now, slot.toLowerCase(), recipe);
+                      Navigator.pop(bottomSheetContext);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            '${recipe.title} added to Today\'s $slot!',
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

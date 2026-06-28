@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'package:go_router/go_router.dart';
+
 import '../../../../core/constants/app_constants.dart';
 import '../../../../core/extensions/color_extensions.dart';
 import '../../../../core/extensions/theme_extensions.dart';
@@ -11,6 +13,12 @@ import '../../../../core/widgets/app_search_bar.dart';
 import '../../../../core/widgets/glass_card.dart';
 import '../../../../core/widgets/recipe_card.dart';
 import '../../../../core/widgets/section_header.dart';
+import '../../../nutrition/presentation/cubit/macro_target_cubit.dart';
+import '../../../nutrition/presentation/cubit/macro_target_state.dart';
+import '../../../pantry/data/models/macro_targets.dart';
+import '../../../pantry/data/models/pantry_item.dart';
+import '../../../pantry/presentation/cubit/pantry_cubit.dart';
+import '../../../pantry/presentation/cubit/pantry_state.dart';
 import '../cubit/home_cubit.dart';
 import '../cubit/home_state.dart';
 
@@ -111,7 +119,11 @@ class _HomeView extends StatelessWidget {
             ),
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('No new notifications')),
+                  );
+                },
                 icon: Icon(
                   Icons.notifications_outlined,
                   color: scheme.onSurface,
@@ -135,15 +147,21 @@ class _HomeView extends StatelessWidget {
                     SizedBox(height: AppSpacing.md.h),
 
                     // ── Search Bar ───────────────────────────────
-                    AppSearchBar(hint: l10n.searchHint),
+                    AppSearchBar(
+                      hint: l10n.searchHint,
+                      onSubmitted: (_) => context.goNamed('pantry'),
+                    ),
 
                     SizedBox(height: AppSpacing.lg.h),
 
                     // ── Ingredients I Have Card ──────────────────
-                    _IngredientsCard(
-                      ingredients: state.pantryItems,
-                      itemCount: state.pantryItemCount,
-                      resolveKey: (key) => _resolveKey(context, key),
+                    BlocBuilder<PantryCubit, PantryState>(
+                      builder: (context, pantryState) {
+                        return _IngredientsCard(
+                          ingredients: pantryState.items,
+                          resolveKey: (key) => _resolveKey(context, key),
+                        );
+                      },
                     ),
 
                     SizedBox(height: AppSpacing.lg.h),
@@ -158,8 +176,31 @@ class _HomeView extends StatelessWidget {
           ),
 
           // ── Recommendations Carousel (needs full-bleed) ────────
-          BlocBuilder<HomeCubit, HomeState>(
+          BlocBuilder<MacroTargetCubit, MacroTargetState>(
             builder: (context, state) {
+              if (state.isLoading) {
+                return SliverToBoxAdapter(
+                  child: SizedBox(
+                    height: 280.h,
+                    child: const Center(child: CircularProgressIndicator()),
+                  ),
+                );
+              }
+
+              final recipes = state.recipes.take(6).toList();
+              
+              if (recipes.isEmpty) {
+                return SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppSpacing.containerMargin.w),
+                    child: Text(
+                      'Tap "Generate Meal Ideas" below to see your tailored recommendations!',
+                      style: AppTextStyles.bodyMd(context),
+                    ),
+                  ),
+                );
+              }
+
               return SliverToBoxAdapter(
                 child: SizedBox(
                   height: 280.h,
@@ -168,25 +209,27 @@ class _HomeView extends StatelessWidget {
                     padding: EdgeInsets.symmetric(
                       horizontal: AppSpacing.containerMargin.w,
                     ),
-                    itemCount: state.recommendations.length,
+                    itemCount: recipes.length,
                     separatorBuilder: (_, _) =>
                         SizedBox(width: AppSpacing.gutter.w),
                     itemBuilder: (context, index) {
-                      final recipe = state.recommendations[index];
+                      final recipe = recipes[index];
                       return RecipeCard(
-                        title: _resolveKey(context, recipe.titleKey),
-                        description:
-                            _resolveKey(context, recipe.descriptionKey),
+                        title: recipe.title,
+                        description: 'A delicious customized meal for you.',
                         imageUrl: recipe.imageUrl,
-                        rating: recipe.rating,
-                        proteinGrams: recipe.proteinGrams,
-                        carbsGrams: recipe.carbsGrams,
-                        fatGrams: recipe.fatGrams,
-                        cookTime:
-                            '${recipe.cookTimeMinutes}${context.l10n.minutes}',
+                        rating: 4.8, // Static rating as Spoonacular complexSearch doesn't always provide one
+                        proteinGrams: recipe.protein.round(),
+                        carbsGrams: recipe.carbs.round(),
+                        fatGrams: recipe.fat.round(),
+                        cookTime: '${recipe.cookTimeMinutes}${context.l10n.minutes}',
                         proteinLabel: context.l10n.proteinShort,
                         carbsLabel: context.l10n.carbsShort,
                         fatLabel: context.l10n.fatShort,
+                        onTap: () => context.pushNamed(
+                          'recipeDetails',
+                          pathParameters: {'id': recipe.id},
+                        ),
                       );
                     },
                   ),
@@ -227,12 +270,10 @@ class _HomeView extends StatelessWidget {
 class _IngredientsCard extends StatelessWidget {
   const _IngredientsCard({
     required this.ingredients,
-    required this.itemCount,
     required this.resolveKey,
   });
 
-  final List<IngredientPlaceholder> ingredients;
-  final int itemCount;
+  final List<PantryItem> ingredients;
   final String Function(String key) resolveKey;
 
   Color _dotColor(BuildContext context, int index) {
@@ -280,7 +321,7 @@ class _IngredientsCard extends StatelessWidget {
                     style: AppTextStyles.headlineSm(context),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () => context.goNamed('pantry'),
                     child: Text(
                       l10n.managePantry,
                       style: AppTextStyles.labelMd(context).copyWith(
@@ -292,7 +333,7 @@ class _IngredientsCard extends StatelessWidget {
               ),
               SizedBox(height: AppSpacing.xs.h),
               Text(
-                l10n.ingredientCount(itemCount),
+                l10n.ingredientCount(ingredients.length),
                 style: AppTextStyles.bodyMd(context).copyWith(
                   color: scheme.onSurfaceVariant,
                 ),
@@ -304,14 +345,14 @@ class _IngredientsCard extends StatelessWidget {
                 spacing: 8.w,
                 runSpacing: 8.h,
                 children: [
-                  ...ingredients.map((ing) => _IngredientChip(
-                        label: resolveKey(ing.nameKey),
-                        dotColor: _dotColor(context, ing.dotColorIndex),
+                  ...ingredients.take(6).toList().asMap().entries.map((entry) => _IngredientChip(
+                        label: entry.value.name,
+                        dotColor: _dotColor(context, entry.key % 4),
                       )),
                   // Add Item button
                   _AddItemChip(
                     label: l10n.addItem,
-                    onTap: () {},
+                    onTap: () => context.goNamed('pantry'),
                   ),
                 ],
               ),
@@ -324,7 +365,10 @@ class _IngredientsCard extends StatelessWidget {
                   color: scheme.primary,
                   borderRadius: BorderRadius.circular(16.r),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      context.read<MacroTargetCubit>().loadMatchingRecipes();
+                      context.goNamed('recipeResults');
+                    },
                     borderRadius: BorderRadius.circular(16.r),
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: 14.h),
@@ -475,7 +519,21 @@ class _FiltersGrid extends StatelessWidget {
           child: Material(
             color: Colors.transparent,
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                final targetCubit = context.read<MacroTargetCubit>();
+                switch (filter.labelKey) {
+                  case 'highProtein':
+                    targetCubit.updateMacroTargets(const MacroTargets(protein: 150));
+                    break;
+                  case 'lowCarb':
+                    targetCubit.updateMacroTargets(const MacroTargets(carbs: 50));
+                    break;
+                  case 'keto':
+                    targetCubit.updateMacroTargets(const MacroTargets(carbs: 30, fat: 80));
+                    break;
+                }
+                context.goNamed('macroFilter');
+              },
               borderRadius: BorderRadius.circular(16.r),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

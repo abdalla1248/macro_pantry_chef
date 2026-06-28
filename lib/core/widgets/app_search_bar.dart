@@ -12,12 +12,14 @@ class AppSearchBar extends StatelessWidget {
     super.key,
     this.hint,
     this.onChanged,
+    this.onSubmitted,
     this.onFilterTap,
     this.controller,
   });
 
   final String? hint;
   final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
   final VoidCallback? onFilterTap;
   final TextEditingController? controller;
 
@@ -47,6 +49,7 @@ class AppSearchBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               onChanged: onChanged,
+              onSubmitted: onSubmitted,
               style: Theme.of(context).textTheme.bodyMedium,
               decoration: InputDecoration(
                 hintText: hint,

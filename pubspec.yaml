@@ -41,6 +41,11 @@ dependencies:
   freezed_annotation: ^2.4.0
   json_annotation: ^4.9.0
   flutter_gen: ^5.14.1
+  share_plus: ^13.2.0
+  image_picker: ^1.2.2
+  path_provider: ^2.1.6
+  wakelock_plus: ^1.6.1
+  translator: ^1.0.4+1
 
 dev_dependencies:
   flutter_test:

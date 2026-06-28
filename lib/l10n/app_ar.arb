@@ -96,5 +96,42 @@
   "servings": "حصص",
   "runningLow": "أوشك على النفاد",
   "missing": "مفقود",
-  "minShort": "دقيقة"
+  "minShort": "دقيقة",
+  "premiumMember": "عضو مميز",
+  "dailyCalories": "السعرات الحرارية اليومية",
+  "dailyGoals": "الأهداف اليومية",
+  "hydration": "الترطيب",
+  "meals": "الوجبات",
+  "weightGoal": "هدف الوزن",
+  "dietaryPreferences": "التفضيلات الغذائية",
+  "allergiesRestrictions": "الحساسية والقيود",
+  "addPreference": "إضافة تفضيل",
+  "addRestriction": "إضافة قيد",
+  "themeSettings": "إعدادات المظهر",
+  "languageSettings": "إعدادات اللغة",
+  "logOut": "تسجيل الخروج",
+  "selectLanguage": "اختر اللغة",
+  "selectThemeMode": "اختر وضع المظهر",
+  "cancel": "إلغاء",
+  "save": "حفظ",
+  "planner": "المخطط",
+  "plannerSubtitle": "صمم طاقتك اليومية.",
+  "daily": "يومي",
+  "weekly": "أسبوعي",
+  "mealsPlanned": "الوجبات المخططة",
+  "shoppingList": "قائمة التسوق",
+  "addRecipeSlot": "إضافة وصفة لـ {slot}",
+  "@addRecipeSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites": "المفضلة",
+  "favoritesSubtitle": "كنوز وصفاتك المحفوظة.",
+  "noSavedRecipes": "لا توجد وصفات محفوظة بعد.",
+  "saveRecipeInstructions": "اضغط على أيقونة القلب في أي صفحة تفاصيل للوصفة.",
+  "missingIngredientsAggregated": "يتم تجميع المكونات المفقودة تلقائيًا بناءً على مخزونك الحالي.",
+  "allIngredientsInStock": "كل شيء جاهز! جميع المكونات متوفرة في مخزنك."
 }

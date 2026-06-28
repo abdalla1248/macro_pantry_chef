@@ -8,8 +8,8 @@ import 'package:macro_pantry_chef/core/extensions/theme_extensions.dart';
 import 'package:macro_pantry_chef/core/widgets/donut_chart.dart';
 import 'package:macro_pantry_chef/core/widgets/glass_card.dart';
 import 'package:macro_pantry_chef/core/widgets/macro_slider_card.dart';
-import '../cubit/recipe_results_cubit.dart';
-import '../cubit/recipe_results_state.dart';
+import '../../../nutrition/presentation/cubit/macro_target_cubit.dart';
+import '../../../nutrition/presentation/cubit/macro_target_state.dart';
 
 class MacroFilterScreen extends StatelessWidget {
   const MacroFilterScreen({super.key});
@@ -46,7 +46,7 @@ class _MacroFilterView extends StatelessWidget {
           ),
         ),
       ),
-      body: BlocBuilder<RecipeResultsCubit, RecipeResultsState>(
+      body: BlocBuilder<MacroTargetCubit, MacroTargetState>(
         builder: (context, state) {
           final targets = state.macroTargets;
 
@@ -65,7 +65,7 @@ class _MacroFilterView extends StatelessWidget {
                     size: 240,
                   ),
                   SizedBox(height: AppSpacing.xl.h),
-                  _MatchPreviewCard(matchCount: state.matchCount),
+                  _MatchPreviewCard(matchCount: state.recipes.length),
                 ],
               );
 
@@ -84,7 +84,7 @@ class _MacroFilterView extends StatelessWidget {
                     min: 0,
                     max: 250,
                     onChanged: (val) => context
-                        .read<RecipeResultsCubit>()
+                        .read<MacroTargetCubit>()
                         .updateMacroTargets(
                             targets.copyWith(protein: val.toInt())),
                   ),
@@ -102,7 +102,7 @@ class _MacroFilterView extends StatelessWidget {
                     min: 0,
                     max: 400,
                     onChanged: (val) => context
-                        .read<RecipeResultsCubit>()
+                        .read<MacroTargetCubit>()
                         .updateMacroTargets(
                             targets.copyWith(carbs: val.toInt())),
                   ),
@@ -120,7 +120,7 @@ class _MacroFilterView extends StatelessWidget {
                     min: 0,
                     max: 150,
                     onChanged: (val) => context
-                        .read<RecipeResultsCubit>()
+                        .read<MacroTargetCubit>()
                         .updateMacroTargets(
                             targets.copyWith(fat: val.toInt())),
                   ),
@@ -138,7 +138,7 @@ class _MacroFilterView extends StatelessWidget {
                     max: 4000,
                     step: 50,
                     onChanged: (val) => context
-                        .read<RecipeResultsCubit>()
+                        .read<MacroTargetCubit>()
                         .updateMacroTargets(
                             targets.copyWith(calories: val.toInt())),
                   ),

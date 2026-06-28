@@ -238,7 +238,11 @@ class _PantryActionBar extends StatelessWidget {
       );
 
       final addButton = FilledButton.icon(
-        onPressed: () {}, // Future phase
+        onPressed: () {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Scan Barcode / Add manually feature coming soon')),
+          );
+        },
         icon: const Icon(Icons.add),
         label: Text(l10n.addManually),
         style: FilledButton.styleFrom(

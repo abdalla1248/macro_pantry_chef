@@ -96,5 +96,42 @@
   "servings": "Servings",
   "runningLow": "Running low",
   "missing": "missing",
-  "minShort": "min"
+  "minShort": "min",
+  "premiumMember": "Premium Member",
+  "dailyCalories": "Daily Calories",
+  "dailyGoals": "Daily Goals",
+  "hydration": "Hydration",
+  "meals": "Meals",
+  "weightGoal": "Weight Goal",
+  "dietaryPreferences": "Dietary Preferences",
+  "allergiesRestrictions": "Allergies & Restrictions",
+  "addPreference": "Add Preference",
+  "addRestriction": "Add Restriction",
+  "themeSettings": "Theme Settings",
+  "languageSettings": "Language Settings",
+  "logOut": "Log Out",
+  "selectLanguage": "Select Language",
+  "selectThemeMode": "Select Theme Mode",
+  "cancel": "Cancel",
+  "save": "Save",
+  "planner": "Planner",
+  "plannerSubtitle": "Design your fuel for the day.",
+  "daily": "Daily",
+  "weekly": "Weekly",
+  "mealsPlanned": "Meals Planned",
+  "shoppingList": "Shopping List",
+  "addRecipeSlot": "Add {slot} Recipe",
+  "@addRecipeSlot": {
+    "placeholders": {
+      "slot": {
+        "type": "String"
+      }
+    }
+  },
+  "favorites": "Favorites",
+  "favoritesSubtitle": "Your saved recipe treasures.",
+  "noSavedRecipes": "No saved recipes yet.",
+  "saveRecipeInstructions": "Tap the heart icon on any recipe details page.",
+  "missingIngredientsAggregated": "Missing ingredients automatically compiled against your current pantry stock.",
+  "allIngredientsInStock": "All set! You have everything in stock."
 }

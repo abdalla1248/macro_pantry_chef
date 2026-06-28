@@ -224,4 +224,98 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get minShort => 'min';
+
+  @override
+  String get premiumMember => 'Premium Member';
+
+  @override
+  String get dailyCalories => 'Daily Calories';
+
+  @override
+  String get dailyGoals => 'Daily Goals';
+
+  @override
+  String get hydration => 'Hydration';
+
+  @override
+  String get meals => 'Meals';
+
+  @override
+  String get weightGoal => 'Weight Goal';
+
+  @override
+  String get dietaryPreferences => 'Dietary Preferences';
+
+  @override
+  String get allergiesRestrictions => 'Allergies & Restrictions';
+
+  @override
+  String get addPreference => 'Add Preference';
+
+  @override
+  String get addRestriction => 'Add Restriction';
+
+  @override
+  String get themeSettings => 'Theme Settings';
+
+  @override
+  String get languageSettings => 'Language Settings';
+
+  @override
+  String get logOut => 'Log Out';
+
+  @override
+  String get selectLanguage => 'Select Language';
+
+  @override
+  String get selectThemeMode => 'Select Theme Mode';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get planner => 'Planner';
+
+  @override
+  String get plannerSubtitle => 'Design your fuel for the day.';
+
+  @override
+  String get daily => 'Daily';
+
+  @override
+  String get weekly => 'Weekly';
+
+  @override
+  String get mealsPlanned => 'Meals Planned';
+
+  @override
+  String get shoppingList => 'Shopping List';
+
+  @override
+  String addRecipeSlot(String slot) {
+    return 'Add $slot Recipe';
+  }
+
+  @override
+  String get favorites => 'Favorites';
+
+  @override
+  String get favoritesSubtitle => 'Your saved recipe treasures.';
+
+  @override
+  String get noSavedRecipes => 'No saved recipes yet.';
+
+  @override
+  String get saveRecipeInstructions =>
+      'Tap the heart icon on any recipe details page.';
+
+  @override
+  String get missingIngredientsAggregated =>
+      'Missing ingredients automatically compiled against your current pantry stock.';
+
+  @override
+  String get allIngredientsInStock => 'All set! You have everything in stock.';
 }

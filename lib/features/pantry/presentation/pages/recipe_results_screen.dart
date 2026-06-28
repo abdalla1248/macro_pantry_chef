@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:macro_pantry_chef/core/theme/app_spacing.dart';
 import 'package:macro_pantry_chef/core/extensions/theme_extensions.dart';
 import 'package:macro_pantry_chef/core/widgets/recipe_result_card.dart';
-import '../cubit/recipe_results_cubit.dart';
-import '../cubit/recipe_results_state.dart';
+import '../../../nutrition/presentation/cubit/macro_target_cubit.dart';
+import '../../../nutrition/presentation/cubit/macro_target_state.dart';
 
 class RecipeResultsScreen extends StatelessWidget {
   const RecipeResultsScreen({super.key});
@@ -37,7 +37,7 @@ class _RecipeResultsView extends StatelessWidget {
           onPressed: () => context.pop(),
         ),
       ),
-      body: BlocBuilder<RecipeResultsCubit, RecipeResultsState>(
+      body: BlocBuilder<MacroTargetCubit, MacroTargetState>(
         builder: (context, state) {
           if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
@@ -103,41 +103,76 @@ class _RecipeResultsView extends StatelessWidget {
                 ),
               ),
 
-              // Grid
-              SliverPadding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: AppSpacing.containerMargin.w,
-                ),
-                sliver: SliverGrid(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 400.w,
-                    mainAxisSpacing: AppSpacing.md.h,
-                    crossAxisSpacing: AppSpacing.md.w,
-                    childAspectRatio: 0.8,
+              // Grid or Empty State
+              if (state.recipes.isEmpty)
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.all(AppSpacing.xl.w),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.restaurant_menu_outlined,
+                            size: 64.sp,
+                            color: scheme.outlineVariant,
+                          ),
+                          SizedBox(height: AppSpacing.md.h),
+                          Text(
+                            'No recipes found',
+                            style: textTheme.headlineSmall?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                          SizedBox(height: AppSpacing.sm.h),
+                          Text(
+                            'Try adjusting your macro filters or adding more ingredients to your pantry.',
+                            textAlign: TextAlign.center,
+                            style: textTheme.bodyMedium?.copyWith(
+                              color: scheme.onSurfaceVariant,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      final recipe = state.recipes[index];
-                      return RecipeResultCard(
-                        title: recipe.title,
-                        imageUrl: recipe.imageUrl,
-                        calories: recipe.calories,
-                        protein: recipe.protein,
-                        carbs: recipe.carbs,
-                        fat: recipe.fat,
-                        cookTimeMinutes: recipe.cookTimeMinutes,
-                        difficulty: recipe.difficulty,
-                        missingCount: recipe.missingCount,
-                        onTap: () => context.pushNamed(
-                          'recipeDetails',
-                          pathParameters: {'id': recipe.id},
-                        ),
-                      );
-                    },
-                    childCount: state.recipes.length,
+                )
+              else
+                SliverPadding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: AppSpacing.containerMargin.w,
+                  ),
+                  sliver: SliverGrid(
+                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 400.w,
+                      mainAxisSpacing: AppSpacing.md.h,
+                      crossAxisSpacing: AppSpacing.md.w,
+                      childAspectRatio: 0.8,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (context, index) {
+                        final recipe = state.recipes[index];
+                        return RecipeResultCard(
+                          title: recipe.title,
+                          imageUrl: recipe.imageUrl,
+                          calories: recipe.calories,
+                          protein: recipe.protein,
+                          carbs: recipe.carbs,
+                          fat: recipe.fat,
+                          cookTimeMinutes: recipe.cookTimeMinutes,
+                          difficulty: recipe.difficulty,
+                          missingCount: recipe.missingCount,
+                          onTap: () => context.pushNamed(
+                            'recipeDetails',
+                            pathParameters: {'id': recipe.id},
+                          ),
+                        );
+                      },
+                      childCount: state.recipes.length,
+                    ),
                   ),
                 ),
-              ),
               
               // Bottom padding
               SliverPadding(

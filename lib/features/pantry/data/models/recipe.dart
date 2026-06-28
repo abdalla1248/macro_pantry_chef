@@ -10,6 +10,20 @@ class RecipeIngredient extends Equatable {
   final String name;
   final String amount;
 
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'amount': amount,
+    };
+  }
+
+  factory RecipeIngredient.fromJson(Map<String, dynamic> json) {
+    return RecipeIngredient(
+      name: json['name'] as String? ?? '',
+      amount: json['amount'] as String? ?? '',
+    );
+  }
+
   @override
   List<Object?> get props => [name, amount];
 }
@@ -25,6 +39,22 @@ class CookingStep extends Equatable {
   final int stepNumber;
   final String title;
   final String description;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'stepNumber': stepNumber,
+      'title': title,
+      'description': description,
+    };
+  }
+
+  factory CookingStep.fromJson(Map<String, dynamic> json) {
+    return CookingStep(
+      stepNumber: json['stepNumber'] as int? ?? 1,
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+    );
+  }
 
   @override
   List<Object?> get props => [stepNumber, title, description];
@@ -67,6 +97,54 @@ class Recipe extends Equatable {
   final List<RecipeIngredient> ingredients;
   final List<CookingStep> instructions;
   final bool isFavorite;
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'description': description,
+      'imageUrl': imageUrl,
+      'calories': calories,
+      'protein': protein,
+      'carbs': carbs,
+      'fat': fat,
+      'cookTimeMinutes': cookTimeMinutes,
+      'difficulty': difficulty,
+      'missingCount': missingCount,
+      'servings': servings,
+      'costLevel': costLevel,
+      'ingredients': ingredients.map((i) => i.toJson()).toList(),
+      'instructions': instructions.map((i) => i.toJson()).toList(),
+      'isFavorite': isFavorite,
+    };
+  }
+
+  factory Recipe.fromJson(Map<String, dynamic> json) {
+    return Recipe(
+      id: json['id']?.toString() ?? '',
+      title: json['title'] as String? ?? '',
+      description: json['description'] as String? ?? '',
+      imageUrl: json['imageUrl'] as String? ?? '',
+      calories: json['calories'] as int? ?? 0,
+      protein: json['protein'] as int? ?? 0,
+      carbs: json['carbs'] as int? ?? 0,
+      fat: json['fat'] as int? ?? 0,
+      cookTimeMinutes: json['cookTimeMinutes'] as int? ?? 20,
+      difficulty: json['difficulty'] as String? ?? 'Easy',
+      missingCount: json['missingCount'] as int? ?? 0,
+      servings: json['servings'] as int? ?? 2,
+      costLevel: json['costLevel'] as String? ?? r'$$',
+      ingredients: (json['ingredients'] as List?)
+              ?.map((item) => RecipeIngredient.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      instructions: (json['instructions'] as List?)
+              ?.map((item) => CookingStep.fromJson(item as Map<String, dynamic>))
+              .toList() ??
+          const [],
+      isFavorite: json['isFavorite'] as bool? ?? false,
+    );
+  }
 
   Recipe copyWith({
     String? id,

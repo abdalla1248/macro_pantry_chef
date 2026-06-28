@@ -213,8 +213,7 @@ class _SplashScreenState extends State<SplashScreen>
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: Padding(
             padding: EdgeInsets.all(AppSpacing.md.w),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.r),
+            child: ClipOval(
               child: Image.network(
                 AppConstants.logoUrl,
                 fit: BoxFit.contain,

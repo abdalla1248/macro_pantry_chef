@@ -7,7 +7,11 @@ import '../../features/pantry/presentation/pages/macro_filter_screen.dart';
 import '../../features/pantry/presentation/pages/pantry_screen.dart';
 import '../../features/pantry/presentation/pages/recipe_detail_screen.dart';
 import '../../features/pantry/presentation/pages/recipe_results_screen.dart';
+import '../../features/pantry/presentation/pages/cooking_mode_screen.dart';
 import '../../features/splash/presentation/pages/splash_screen.dart';
+import '../../features/planner/presentation/pages/planner_screen.dart';
+import '../../features/favorites/presentation/pages/favorites_screen.dart';
+import '../../features/profile/presentation/pages/profile_screen.dart';
 
 /// Centralised application routing using GoRouter.
 ///
@@ -70,44 +74,51 @@ abstract final class AppRouter {
                       final id = state.pathParameters['id'] ?? '';
                       return RecipeDetailScreen(recipeId: id);
                     },
+                    routes: [
+                      GoRoute(
+                        path: 'cook',
+                        name: 'cookingMode',
+                        builder: (context, state) {
+                          final id = state.pathParameters['id'] ?? '';
+                          return CookingModeScreen(recipeId: id);
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
             ],
           ),
 
-          // Planner (Phase 5 placeholder)
+          // Planner
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/planner',
                 name: 'planner',
-                builder: (context, state) =>
-                    const _PlaceholderPage(icon: Icons.calendar_today),
+                builder: (context, state) => const PlannerScreen(),
               ),
             ],
           ),
 
-          // Favorites (Phase 5 placeholder)
+          // Favorites
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/favorites',
                 name: 'favorites',
-                builder: (context, state) =>
-                    const _PlaceholderPage(icon: Icons.favorite_border),
+                builder: (context, state) => const FavoritesScreen(),
               ),
             ],
           ),
 
-          // Profile (Phase 5 placeholder)
+          // Profile
           StatefulShellBranch(
             routes: [
               GoRoute(
                 path: '/profile',
                 name: 'profile',
-                builder: (context, state) =>
-                    const _PlaceholderPage(icon: Icons.person_outline),
+                builder: (context, state) => const ProfileScreen(),
               ),
             ],
           ),
@@ -115,33 +126,4 @@ abstract final class AppRouter {
       ),
     ],
   );
-}
-
-/// Minimal placeholder page for tabs not yet implemented.
-class _PlaceholderPage extends StatelessWidget {
-  const _PlaceholderPage({required this.icon});
-
-  final IconData icon;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Icon(icon, size: 64, color: theme.colorScheme.outlineVariant),
-            const SizedBox(height: 16),
-            Text(
-              'Coming Soon',
-              style: theme.textTheme.headlineSmall?.copyWith(
-                color: theme.colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

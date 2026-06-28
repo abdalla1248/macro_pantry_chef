@@ -224,4 +224,99 @@ class AppLocalizationsAr extends AppLocalizations {
 
   @override
   String get minShort => 'دقيقة';
+
+  @override
+  String get premiumMember => 'عضو مميز';
+
+  @override
+  String get dailyCalories => 'السعرات الحرارية اليومية';
+
+  @override
+  String get dailyGoals => 'الأهداف اليومية';
+
+  @override
+  String get hydration => 'الترطيب';
+
+  @override
+  String get meals => 'الوجبات';
+
+  @override
+  String get weightGoal => 'هدف الوزن';
+
+  @override
+  String get dietaryPreferences => 'التفضيلات الغذائية';
+
+  @override
+  String get allergiesRestrictions => 'الحساسية والقيود';
+
+  @override
+  String get addPreference => 'إضافة تفضيل';
+
+  @override
+  String get addRestriction => 'إضافة قيد';
+
+  @override
+  String get themeSettings => 'إعدادات المظهر';
+
+  @override
+  String get languageSettings => 'إعدادات اللغة';
+
+  @override
+  String get logOut => 'تسجيل الخروج';
+
+  @override
+  String get selectLanguage => 'اختر اللغة';
+
+  @override
+  String get selectThemeMode => 'اختر وضع المظهر';
+
+  @override
+  String get cancel => 'إلغاء';
+
+  @override
+  String get save => 'حفظ';
+
+  @override
+  String get planner => 'المخطط';
+
+  @override
+  String get plannerSubtitle => 'صمم طاقتك اليومية.';
+
+  @override
+  String get daily => 'يومي';
+
+  @override
+  String get weekly => 'أسبوعي';
+
+  @override
+  String get mealsPlanned => 'الوجبات المخططة';
+
+  @override
+  String get shoppingList => 'قائمة التسوق';
+
+  @override
+  String addRecipeSlot(String slot) {
+    return 'إضافة وصفة لـ $slot';
+  }
+
+  @override
+  String get favorites => 'المفضلة';
+
+  @override
+  String get favoritesSubtitle => 'كنوز وصفاتك المحفوظة.';
+
+  @override
+  String get noSavedRecipes => 'لا توجد وصفات محفوظة بعد.';
+
+  @override
+  String get saveRecipeInstructions =>
+      'اضغط على أيقونة القلب في أي صفحة تفاصيل للوصفة.';
+
+  @override
+  String get missingIngredientsAggregated =>
+      'يتم تجميع المكونات المفقودة تلقائيًا بناءً على مخزونك الحالي.';
+
+  @override
+  String get allIngredientsInStock =>
+      'كل شيء جاهز! جميع المكونات متوفرة في مخزنك.';
 }

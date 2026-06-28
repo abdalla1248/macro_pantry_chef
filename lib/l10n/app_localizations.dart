@@ -523,6 +523,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'min'**
   String get minShort;
+
+  /// No description provided for @premiumMember.
+  ///
+  /// In en, this message translates to:
+  /// **'Premium Member'**
+  String get premiumMember;
+
+  /// No description provided for @dailyCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Calories'**
+  String get dailyCalories;
+
+  /// No description provided for @dailyGoals.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Goals'**
+  String get dailyGoals;
+
+  /// No description provided for @hydration.
+  ///
+  /// In en, this message translates to:
+  /// **'Hydration'**
+  String get hydration;
+
+  /// No description provided for @meals.
+  ///
+  /// In en, this message translates to:
+  /// **'Meals'**
+  String get meals;
+
+  /// No description provided for @weightGoal.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight Goal'**
+  String get weightGoal;
+
+  /// No description provided for @dietaryPreferences.
+  ///
+  /// In en, this message translates to:
+  /// **'Dietary Preferences'**
+  String get dietaryPreferences;
+
+  /// No description provided for @allergiesRestrictions.
+  ///
+  /// In en, this message translates to:
+  /// **'Allergies & Restrictions'**
+  String get allergiesRestrictions;
+
+  /// No description provided for @addPreference.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Preference'**
+  String get addPreference;
+
+  /// No description provided for @addRestriction.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Restriction'**
+  String get addRestriction;
+
+  /// No description provided for @themeSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Theme Settings'**
+  String get themeSettings;
+
+  /// No description provided for @languageSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Language Settings'**
+  String get languageSettings;
+
+  /// No description provided for @logOut.
+  ///
+  /// In en, this message translates to:
+  /// **'Log Out'**
+  String get logOut;
+
+  /// No description provided for @selectLanguage.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Language'**
+  String get selectLanguage;
+
+  /// No description provided for @selectThemeMode.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Theme Mode'**
+  String get selectThemeMode;
+
+  /// No description provided for @cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel'**
+  String get cancel;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @planner.
+  ///
+  /// In en, this message translates to:
+  /// **'Planner'**
+  String get planner;
+
+  /// No description provided for @plannerSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Design your fuel for the day.'**
+  String get plannerSubtitle;
+
+  /// No description provided for @daily.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily'**
+  String get daily;
+
+  /// No description provided for @weekly.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly'**
+  String get weekly;
+
+  /// No description provided for @mealsPlanned.
+  ///
+  /// In en, this message translates to:
+  /// **'Meals Planned'**
+  String get mealsPlanned;
+
+  /// No description provided for @shoppingList.
+  ///
+  /// In en, this message translates to:
+  /// **'Shopping List'**
+  String get shoppingList;
+
+  /// No description provided for @addRecipeSlot.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {slot} Recipe'**
+  String addRecipeSlot(String slot);
+
+  /// No description provided for @favorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorites'**
+  String get favorites;
+
+  /// No description provided for @favoritesSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your saved recipe treasures.'**
+  String get favoritesSubtitle;
+
+  /// No description provided for @noSavedRecipes.
+  ///
+  /// In en, this message translates to:
+  /// **'No saved recipes yet.'**
+  String get noSavedRecipes;
+
+  /// No description provided for @saveRecipeInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the heart icon on any recipe details page.'**
+  String get saveRecipeInstructions;
+
+  /// No description provided for @missingIngredientsAggregated.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing ingredients automatically compiled against your current pantry stock.'**
+  String get missingIngredientsAggregated;
+
+  /// No description provided for @allIngredientsInStock.
+  ///
+  /// In en, this message translates to:
+  /// **'All set! You have everything in stock.'**
+  String get allIngredientsInStock;
 }
 
 class _AppLocalizationsDelegate
