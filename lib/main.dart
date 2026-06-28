@@ -4,12 +4,15 @@ import 'package:macro_pantry_chef/l10n/app_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'core/config/app_config.dart';
 import 'core/constants/app_constants.dart';
 import 'core/network/dio_client.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/cubit/theme_cubit.dart';
 import 'core/theme/cubit/theme_state.dart';
+import 'features/pantry/presentation/cubit/pantry_cubit.dart';
+import 'features/pantry/presentation/cubit/recipe_results_cubit.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +20,8 @@ Future<void> main() async {
   // Initialise SharedPreferences
   final prefs = await SharedPreferences.getInstance();
 
-  // Initialise Dio (base URL will be set in Phase 3)
-  DioClient.instance.init();
+  // Initialise Dio with Spoonacular configuration
+  DioClient.instance.init(baseUrl: AppConfig.spoonacularBaseUrl);
 
   runApp(MacroPantryChefApp(prefs: prefs));
 }
@@ -38,8 +41,16 @@ class MacroPantryChefApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return BlocProvider(
-          create: (_) => ThemeCubit(prefs),
+        return MultiBlocProvider(
+          providers: [
+            BlocProvider<ThemeCubit>(create: (_) => ThemeCubit(prefs)),
+            BlocProvider<PantryCubit>(create: (_) => PantryCubit()),
+            BlocProvider<RecipeResultsCubit>(
+              create: (context) => RecipeResultsCubit(
+                pantryCubit: context.read<PantryCubit>(),
+              )..loadMatchingRecipes(),
+            ),
+          ],
           child: BlocBuilder<ThemeCubit, ThemeState>(
             builder: (context, themeState) {
               return MaterialApp.router(

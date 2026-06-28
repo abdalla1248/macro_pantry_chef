@@ -16,12 +16,7 @@ class MacroFilterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Re-use or create the results cubit. Since it's a flow, ideally it's provided
-    // at a higher level (like a nested router) or passed along. For now we create it.
-    return BlocProvider(
-      create: (context) => RecipeResultsCubit(),
-      child: const _MacroFilterView(),
-    );
+    return const _MacroFilterView();
   }
 }
 

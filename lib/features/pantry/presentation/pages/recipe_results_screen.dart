@@ -14,10 +14,7 @@ class RecipeResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => RecipeResultsCubit(),
-      child: const _RecipeResultsView(),
-    );
+    return const _RecipeResultsView();
   }
 }
 

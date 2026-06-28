@@ -16,11 +16,7 @@ class RecipeDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // For a real app we'd fetch the specific recipe, here we just use the mock from cubit
-    return BlocProvider(
-      create: (context) => RecipeResultsCubit(),
-      child: _RecipeDetailView(recipeId: recipeId),
-    );
+    return _RecipeDetailView(recipeId: recipeId);
   }
 }
 

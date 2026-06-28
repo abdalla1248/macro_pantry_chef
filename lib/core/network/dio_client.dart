@@ -2,10 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
 import 'api_exceptions.dart';
+import 'spoonacular_interceptor.dart';
 
 /// Singleton Dio HTTP client with interceptors, logging, and error handling.
-///
-/// Base URL and API key will be configured in Phase 3 (Spoonacular).
 class DioClient {
   DioClient._();
 
@@ -36,6 +35,8 @@ class DioClient {
         },
       ),
     );
+
+    _dio.interceptors.add(SpoonacularInterceptor());
 
     // Logging interceptor (debug only)
     if (kDebugMode) {
