@@ -1,3 +1,7 @@
+import 'dart:developer';
+
+import 'package:flutter/foundation.dart';
+
 import '../../../../core/network/dio_client.dart';
 import '../../../pantry/data/models/recipe_dto.dart';
 
@@ -10,19 +14,42 @@ class NutritionRemoteDataSource {
     required List<String> ingredients,
     int number = 10,
   }) async {
+    final queryParameters = {
+      'includeIngredients': ingredients.join(','),
+      'fillIngredients': true,
+      'addRecipeInformation': true,
+      'addRecipeNutrition': true,
+      'number': number,
+    };
+
+    if (kDebugMode) {
+      log(
+        '🌐 searchRecipesByIngredients\n'
+        '   Endpoint: recipes/complexSearch\n'
+        '   Query: $queryParameters',
+        name: 'NutritionDataSource',
+      );
+    }
+
     final response = await _dioClient.get(
       'recipes/complexSearch',
-      queryParameters: {
-        'includeIngredients': ingredients.join(','),
-        'fillIngredients': true,
-        'addRecipeInformation': true,
-        'addRecipeNutrition': true,
-        'number': number,
-      },
+      queryParameters: queryParameters,
     );
+
     final data = response.data as Map<String, dynamic>?;
     final results = data?['results'] as List?;
-    if (results == null) return [];
+
+    if (kDebugMode) {
+      log(
+        '🌐 searchRecipesByIngredients response\n'
+        '   Status: ${response.statusCode}\n'
+        '   Total results: ${data?['totalResults']}\n'
+        '   Results in page: ${results?.length ?? 0}',
+        name: 'NutritionDataSource',
+      );
+    }
+
+    if (results == null || results.isEmpty) return [];
     return results
         .map((item) => RecipeDto.fromJson(item as Map<String, dynamic>))
         .toList();
@@ -43,7 +70,7 @@ class NutritionRemoteDataSource {
     List<String>? intolerances,
     int number = 10,
   }) async {
-    final queryParameters = {
+    final queryParameters = <String, dynamic>{
       'minProtein': minProtein,
       'maxProtein': maxProtein,
       'minCarbs': minCarbs,
@@ -70,13 +97,34 @@ class NutritionRemoteDataSource {
       queryParameters['intolerances'] = intolerances.join(',');
     }
 
+    if (kDebugMode) {
+      log(
+        '🌐 searchRecipesByMacros\n'
+        '   Endpoint: recipes/complexSearch\n'
+        '   Query: $queryParameters',
+        name: 'NutritionDataSource',
+      );
+    }
+
     final response = await _dioClient.get(
       'recipes/complexSearch',
       queryParameters: queryParameters,
     );
+
     final data = response.data as Map<String, dynamic>?;
     final results = data?['results'] as List?;
-    if (results == null) return [];
+
+    if (kDebugMode) {
+      log(
+        '🌐 searchRecipesByMacros response\n'
+        '   Status: ${response.statusCode}\n'
+        '   Total results: ${data?['totalResults']}\n'
+        '   Results in page: ${results?.length ?? 0}',
+        name: 'NutritionDataSource',
+      );
+    }
+
+    if (results == null || results.isEmpty) return [];
     return results
         .map((item) => RecipeDto.fromJson(item as Map<String, dynamic>))
         .toList();
@@ -84,6 +132,13 @@ class NutritionRemoteDataSource {
 
   /// Fetches complete recipe details.
   Future<RecipeDto> getRecipeInformation(String id) async {
+    if (kDebugMode) {
+      log(
+        '🌐 getRecipeInformation for id=$id',
+        name: 'NutritionDataSource',
+      );
+    }
+
     final response = await _dioClient.get(
       'recipes/$id/information',
       queryParameters: {

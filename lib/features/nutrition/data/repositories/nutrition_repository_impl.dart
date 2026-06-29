@@ -5,6 +5,24 @@ import '../datasources/nutrition_remote_data_source.dart';
 import '../../../pantry/data/models/macro_targets.dart';
 import '../../../pantry/data/models/recipe.dart';
 
+/// Valid Spoonacular diet values.
+///
+/// Any dietary preference from the user profile that does NOT map to one of
+/// these is a nutritional goal (e.g. "High Protein", "Low Sodium") and must
+/// be handled via macro filters, NOT the `diet` query parameter.
+const _validSpoonacularDiets = <String>{
+  'gluten free',
+  'ketogenic',
+  'vegetarian',
+  'lacto-vegetarian',
+  'ovo-vegetarian',
+  'vegan',
+  'pescetarian',
+  'paleo',
+  'primal',
+  'whole30',
+};
+
 /// Concrete implementation of [NutritionRepository] for the nutrition feature.
 class NutritionRepositoryImpl implements NutritionRepository {
   NutritionRepositoryImpl({
@@ -18,16 +36,25 @@ class NutritionRepositoryImpl implements NutritionRepository {
     required List<String> ingredients,
   }) async {
     try {
+      log(
+        '📦 getMatchingRecipes called with ${ingredients.length} ingredients: $ingredients',
+        name: 'NutritionRepository',
+      );
       final dtos = await remoteDataSource.searchRecipesByIngredients(
         ingredients: ingredients,
+      );
+      log(
+        '📦 getMatchingRecipes returned ${dtos.length} DTOs',
+        name: 'NutritionRepository',
       );
       if (dtos.isEmpty) return [];
       return dtos.map((dto) => dto.toDomain()).toList();
     } catch (e, stackTrace) {
       log(
-        'Nutrition API error in getMatchingRecipes',
+        '📦 getMatchingRecipes ERROR',
         error: e,
         stackTrace: stackTrace,
+        name: 'NutritionRepository',
       );
       rethrow;
     }
@@ -41,43 +68,58 @@ class NutritionRepositoryImpl implements NutritionRepository {
     List<String>? intolerances,
   }) async {
     try {
-      // Divide daily targets by expected meals per day (e.g., 3) to get per-serving thresholds
+      // ── 1. Divide daily targets by meals-per-day for per-serving bounds ──
       const mealsPerDay = 3;
       final perMealProtein = targets.protein / mealsPerDay;
       final perMealCarbs = targets.carbs / mealsPerDay;
       final perMealFat = targets.fat / mealsPerDay;
       final perMealCalories = targets.calories / mealsPerDay;
 
-      // Calculate +/- 30% tolerance bounds per meal
-      final minProtein = (perMealProtein * 0.7).round();
-      final maxProtein = (perMealProtein * 1.3).round();
-      final minCarbs = (perMealCarbs * 0.7).round();
-      final maxCarbs = (perMealCarbs * 1.3).round();
-      final minFat = (perMealFat * 0.7).round();
-      final maxFat = (perMealFat * 1.3).round();
-      final minCalories = (perMealCalories * 0.7).round();
-      final maxCalories = (perMealCalories * 1.3).round();
+      final minProtein = (perMealProtein * 0.5).round();
+      final maxProtein = (perMealProtein * 1.5).round();
+      final minCarbs = (perMealCarbs * 0.5).round();
+      final maxCarbs = (perMealCarbs * 1.5).round();
+      final minFat = (perMealFat * 0.5).round();
+      final maxFat = (perMealFat * 1.5).round();
+      final minCalories = (perMealCalories * 0.5).round();
+      final maxCalories = (perMealCalories * 1.5).round();
 
-      // Map diets to standard Spoonacular parameters if needed
-      final standardDiets = diets?.map((d) {
-        final lower = d.toLowerCase();
-        if (lower.contains('pescatarian')) return 'pescetarian';
-        if (lower.contains('keto')) return 'ketogenic';
-        if (lower.contains('gluten')) return 'gluten free';
-        return lower;
-      }).toList();
+      // ── 2. Map user dietary preferences to valid Spoonacular diet values ──
+      //
+      // "High Protein", "Low Sodium", "Low Carb" are nutritional goals, NOT
+      // Spoonacular diets.  Sending them causes the API to return 0 results.
+      final standardDiets = <String>[];
+      if (diets != null) {
+        for (final d in diets) {
+          final mapped = _mapDiet(d);
+          if (mapped != null && _validSpoonacularDiets.contains(mapped)) {
+            standardDiets.add(mapped);
+          } else {
+            log(
+              '⚠️ Skipping non-diet preference "$d" (mapped: "$mapped") — '
+              'not a valid Spoonacular diet parameter',
+              name: 'NutritionRepository',
+            );
+          }
+        }
+      }
 
+      // ── 3. Map intolerances ──
       final standardIntolerances = intolerances?.map((i) {
         final lower = i.toLowerCase();
         if (lower.contains('tree')) return 'tree nut';
-        if (lower.contains('peanut')) return 'peanut';
-        if (lower.contains('shellfish')) return 'shellfish';
-        if (lower.contains('seafood')) return 'seafood';
-        if (lower.contains('dairy')) return 'dairy';
-        if (lower.contains('soy')) return 'soy';
-        if (lower.contains('wheat')) return 'wheat';
         return lower;
       }).toList();
+
+      log(
+        '🔍 getRecipesByMacros query:\n'
+        '   Daily targets: P=${targets.protein}g C=${targets.carbs}g F=${targets.fat}g Cal=${targets.calories}\n'
+        '   Per-meal bounds: P=$minProtein-$maxProtein C=$minCarbs-$maxCarbs F=$minFat-$maxFat Cal=$minCalories-$maxCalories\n'
+        '   Ingredients: $ingredients\n'
+        '   Diets (filtered): $standardDiets\n'
+        '   Intolerances: $standardIntolerances',
+        name: 'NutritionRepository',
+      );
 
       final dtos = await remoteDataSource.searchRecipesByMacros(
         minProtein: minProtein,
@@ -89,16 +131,22 @@ class NutritionRepositoryImpl implements NutritionRepository {
         minCalories: minCalories,
         maxCalories: maxCalories,
         ingredients: ingredients,
-        diets: standardDiets,
+        diets: standardDiets.isEmpty ? null : standardDiets,
         intolerances: standardIntolerances,
+      );
+
+      log(
+        '🔍 getRecipesByMacros returned ${dtos.length} DTOs',
+        name: 'NutritionRepository',
       );
       if (dtos.isEmpty) return [];
       return dtos.map((dto) => dto.toDomain()).toList();
     } catch (e, stackTrace) {
       log(
-        'Nutrition API error in getRecipesByMacros',
+        '🔍 getRecipesByMacros ERROR',
         error: e,
         stackTrace: stackTrace,
+        name: 'NutritionRepository',
       );
       rethrow;
     }
@@ -114,8 +162,32 @@ class NutritionRepositoryImpl implements NutritionRepository {
         'Nutrition API error in getRecipeDetail',
         error: e,
         stackTrace: stackTrace,
+        name: 'NutritionRepository',
       );
       rethrow;
     }
+  }
+
+  /// Maps user-facing dietary preferences to Spoonacular-compatible diet strings.
+  /// Returns `null` for preferences that are nutritional goals, not diets.
+  String? _mapDiet(String userPreference) {
+    final lower = userPreference.toLowerCase().trim();
+    // Nutritional goals — NOT diets. Return null so they are filtered out.
+    if (lower.contains('high protein')) return null;
+    if (lower.contains('low sodium')) return null;
+    if (lower.contains('low carb')) return null;
+    if (lower.contains('low fat')) return null;
+
+    // Actual diets
+    if (lower.contains('pescatarian')) return 'pescetarian';
+    if (lower.contains('keto')) return 'ketogenic';
+    if (lower.contains('gluten')) return 'gluten free';
+    if (lower.contains('vegetarian')) return 'vegetarian';
+    if (lower.contains('vegan')) return 'vegan';
+    if (lower.contains('paleo')) return 'paleo';
+    if (lower.contains('whole30')) return 'whole30';
+
+    // Unknown — return as-is, will be filtered by _validSpoonacularDiets check
+    return lower;
   }
 }

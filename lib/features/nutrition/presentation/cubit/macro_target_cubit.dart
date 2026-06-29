@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/datasources/nutrition_remote_data_source.dart';
@@ -43,18 +45,50 @@ class MacroTargetCubit extends Cubit<MacroTargetState> {
     emit(state.copyWith(isLoading: true, errorMessage: null));
     try {
       final profile = profileCubit.state.profile;
+      final ingredients = _currentIngredients;
+
+      if (kDebugMode) {
+        log(
+          '🚀 loadMatchingRecipes\n'
+          '   Ingredients (${ingredients.length}): $ingredients\n'
+          '   Diets: ${profile.dietaryPreferences}\n'
+          '   Allergies: ${profile.allergies}\n'
+          '   Macro targets: P=${profile.macroTargets.protein} '
+          'C=${profile.macroTargets.carbs} '
+          'F=${profile.macroTargets.fat} '
+          'Cal=${profile.macroTargets.calories}',
+          name: 'MacroTargetCubit',
+        );
+      }
+
       final recipes = await _repository.getRecipesByMacros(
         targets: profile.macroTargets,
-        ingredients: _currentIngredients,
+        ingredients: ingredients,
         diets: profile.dietaryPreferences,
         intolerances: profile.allergies,
       );
+
+      if (kDebugMode) {
+        log(
+          '✅ loadMatchingRecipes completed\n'
+          '   Recipes returned: ${recipes.length}\n'
+          '   Titles: ${recipes.map((r) => r.title).toList()}',
+          name: 'MacroTargetCubit',
+        );
+      }
+
       emit(state.copyWith(
         recipes: recipes,
         macroTargets: profile.macroTargets,
         isLoading: false,
       ));
     } catch (e) {
+      if (kDebugMode) {
+        log(
+          '❌ loadMatchingRecipes ERROR: $e',
+          name: 'MacroTargetCubit',
+        );
+      }
       emit(state.copyWith(
         isLoading: false,
         errorMessage: e.toString(),
@@ -73,8 +107,22 @@ class MacroTargetCubit extends Cubit<MacroTargetState> {
         diets: profile.dietaryPreferences,
         intolerances: profile.allergies,
       );
+
+      if (kDebugMode) {
+        log(
+          '✅ applyMacroFilter completed — ${recipes.length} recipes',
+          name: 'MacroTargetCubit',
+        );
+      }
+
       emit(state.copyWith(recipes: recipes, isLoading: false));
     } catch (e) {
+      if (kDebugMode) {
+        log(
+          '❌ applyMacroFilter ERROR: $e',
+          name: 'MacroTargetCubit',
+        );
+      }
       emit(state.copyWith(
         isLoading: false,
         errorMessage: e.toString(),
